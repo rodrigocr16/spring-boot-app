@@ -1,20 +1,20 @@
 package br.gov.sp.fatec.springbootapp.entity;
 
-import javax.persistence.Id;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.AttributeOverride;
 
 @Entity
 @Table(name = "usu_usuario")
-public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "usu_id")
-    private Long id;
+@AttributeOverride(name = "id", column = @Column(name = "usu_id"))
+public class Usuario extends GeraId{
 
     @Column(name = "usu_nome_usuario")
     private String nomeUsuario;
@@ -25,13 +25,15 @@ public class Usuario {
     @Column(name = "usu_nome_exibicao")
     private String nomeExibicao;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "uau_usuario_autorizacao",
+        joinColumns = { @JoinColumn(name = "uau_usu_id") },
+        inverseJoinColumns = { @JoinColumn(name = "uau_aut_id") }
+    )
+    private Set<Autorizacao> autorizacoes;
 
-    public Long getId() {
-        return this.id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
+    // METHODS
 
     public String getNomeUsuario() {
         return nomeUsuario;
@@ -52,5 +54,12 @@ public class Usuario {
     }
     public void setNomeExibicao(String nomeExibicao) {
         this.nomeExibicao = nomeExibicao;
+    }
+
+    public Set<Autorizacao> getAutorizacoes() {
+        return this.autorizacoes;
+    }
+    public void setAutorizacoes(HashSet<Autorizacao> hashSet) {
+        this.autorizacoes = hashSet;
     }
 }
