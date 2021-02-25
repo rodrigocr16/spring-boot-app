@@ -32,8 +32,6 @@ public class Usuario extends GeraId{
     )
     private Set<Autorizacao> autorizacoes;
 
-    
-    // METHODS
 
     public String getNomeUsuario() {
         return nomeUsuario;
