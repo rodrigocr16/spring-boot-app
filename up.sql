@@ -32,9 +32,32 @@ create table uau_usuario_autorizacao (
     constraint pk_uau primary key(uau_aut_id, uau_usu_id)
 );
 
+create table cla_classe (
+    cla_id bigint unsigned,
+    cla_nome varchar(64) not null,
+
+    constraint pk_cla primary key(cla_id)
+);
+
+create table per_personagem (
+    per_id bigint unsigned,
+    per_proprietario bigint unsigned,
+    per_classe bigint unsigned,
+    per_nome varchar(64) not null,
+
+    constraint fk_per_cla foreign key(per_classe)
+        references cla_classe(cla_id),
+    constraint pk_per primary key(per_id)
+);
+
 insert into usu_usuario(usu_nome_usuario, usu_senha, usu_nome_exibicao)
     values('rodrigocr16', 'pepino', 'rodrigo reis');
 
 insert into aut_autorizacao(aut_tipo) values('admin');
 
 insert into uau_usuario_autorizacao values(1,1);
+
+insert into cla_classe(cla_nome) values('bardo');
+
+insert into per_personagem(per_proprietario, per_classe, per_nome)
+    values(1, 1, 'JoCat');
