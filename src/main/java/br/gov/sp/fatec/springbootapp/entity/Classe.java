@@ -1,8 +1,11 @@
 package br.gov.sp.fatec.springbootapp.entity;
 
+import java.util.Set;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.AttributeOverride;
 
 @Entity
@@ -12,6 +15,9 @@ public class Classe extends GeraId{
     
     @Column(name = "cla_nome")
     private String nome;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "classe")
+    private Set<Personagem> personagens;
 
 
     public String getNome() {

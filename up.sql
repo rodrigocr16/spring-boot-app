@@ -33,14 +33,14 @@ create table uau_usuario_autorizacao (
 );
 
 create table cla_classe (
-    cla_id bigint unsigned,
+    cla_id bigint unsigned auto_increment,
     cla_nome varchar(64) not null,
 
     constraint pk_cla primary key(cla_id)
 );
 
 create table per_personagem (
-    per_id bigint unsigned,
+    per_id bigint unsigned auto_increment,
     per_proprietario bigint unsigned,
     per_classe bigint unsigned,
     per_nome varchar(64) not null,

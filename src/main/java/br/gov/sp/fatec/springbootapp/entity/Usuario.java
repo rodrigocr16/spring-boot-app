@@ -1,14 +1,15 @@
 package br.gov.sp.fatec.springbootapp.entity;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.HashSet;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.AttributeOverride;
 
 @Entity
@@ -31,6 +32,9 @@ public class Usuario extends GeraId{
         inverseJoinColumns = { @JoinColumn(name = "uau_aut_id") }
     )
     private Set<Autorizacao> autorizacoes;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "proprietario")
+    private Set<Personagem> personagens;    
 
 
     public String getNomeUsuario() {

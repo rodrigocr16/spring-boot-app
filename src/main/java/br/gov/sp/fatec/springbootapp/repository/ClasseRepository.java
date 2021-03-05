@@ -5,4 +5,5 @@ import br.gov.sp.fatec.springbootapp.entity.Classe;
 
 public interface ClasseRepository extends JpaRepository<Classe, Long> {
     
+    public Classe findByNome(String nome);
 }

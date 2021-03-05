@@ -10,12 +10,17 @@ import org.junit.jupiter.api.Test;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import org.springframework.test.annotation.Rollback;
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
+import br.gov.sp.fatec.springbootapp.entity.Classe;
+import br.gov.sp.fatec.springbootapp.entity.Personagem;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
 import br.gov.sp.fatec.springbootapp.service.SegurancaService;
 import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
+import br.gov.sp.fatec.springbootapp.repository.ClasseRepository;
+import br.gov.sp.fatec.springbootapp.repository.PersonagemRepository;
 
 @SpringBootTest
 @Transactional
@@ -27,6 +32,12 @@ class SpringBootAppApplicationTests {
     
     @Autowired
     private AutorizacaoRepository autRepo;
+
+    @Autowired
+    private PersonagemRepository personagemRepo;
+
+    @Autowired
+    private ClasseRepository classeRepo;
 
     @Autowired
     private SegurancaService segService;
@@ -49,6 +60,13 @@ class SpringBootAppApplicationTests {
 
         usuarioRepo.save(usuario);
         assertNotNull(usuario.getId());
+    }
+    @Test
+    void testaClasse() {
+        Classe classe = new Classe();
+        classe.setNome("Barbaro");
+        classeRepo.save(classe);
+        assertNotNull(classe.getId());
     }
     @Test
     void testaAutorizacao() {
@@ -93,6 +111,28 @@ class SpringBootAppApplicationTests {
     void testaQueryBuscaUsuarioAutorizacao() {
         List<Usuario> usuarios = usuarioRepo.buscaPorNomeAutorizacao("admin");
         assertTrue(!usuarios.isEmpty());
+    }
+
+    // TESTES DE PERSONAGEM
+    @Test
+    void testaPersonagem() {
+        Personagem personagem = new Personagem();
+        personagem.setProprietario(usuarioRepo.buscaPorNome("rodrigocr16"));
+        personagem.setClasse(classeRepo.findByNome("bardo"));
+        personagem.setNome("Seeker");
+
+        personagemRepo.save(personagem);
+        assertNotNull(personagem.getId());
+    }
+    @Test
+    void testaListarPersonagens() {
+        List<Personagem> personagens = personagemRepo.buscaPorProprietario("rodrigocr16");
+        assertTrue(!personagens.isEmpty());
+    }
+    @Test
+    void testaListarPersonagensClasse() {
+        List<Personagem> personagens = personagemRepo.buscaPorClasseEProprietario("bardo", "rodrigocr16");
+        assertTrue(!personagens.isEmpty());
     }
 
     // TESTE DE SERVICES
