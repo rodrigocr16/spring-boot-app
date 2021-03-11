@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+import br.gov.sp.fatec.springbootapp.service.NovoPersonagemService;
 import br.gov.sp.fatec.springbootapp.service.SegurancaService;
 import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.springbootapp.repository.ClasseRepository;
@@ -26,6 +27,9 @@ import br.gov.sp.fatec.springbootapp.repository.PersonagemRepository;
 @Transactional
 @Rollback
 class SpringBootAppApplicationTests {
+
+    @Autowired
+    private NovoPersonagemService perService;
 
     @Autowired
     private UsuarioRepository usuarioRepo;
@@ -141,4 +145,13 @@ class SpringBootAppApplicationTests {
         Usuario usuario = segService.criarUsuario("joedoe", "j03m4m4", "joseph doestar", "usuario");
         assertNotNull(usuario);
     }
+
+
+    @Test
+    void testaServicoCriaPersonagem() {
+        Personagem personagem = perService.novoPersonagem("usuario_teste", "paladino", "artimus");
+        assertNotNull(personagem);
+    }
+    
+    */
 }

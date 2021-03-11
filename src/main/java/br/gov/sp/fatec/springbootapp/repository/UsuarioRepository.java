@@ -10,6 +10,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
     public List<Usuario> findUsuarioByNomeExibicaoContainsIgnoreCase(String nomeExibicao);
     
     public List<Usuario> findUsuarioByAutorizacoesTipo(String autorizacao);
+
+    public Usuario findUsuarioByNomeUsuario(String nomeUsuario);
     
     public Usuario findUsuarioByNomeExibicaoOrNomeUsuario(String nomeExibicao, String nomeUsuario);
 
