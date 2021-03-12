@@ -1,31 +1,28 @@
 package br.gov.sp.fatec.springbootapp;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.HashSet;
 import java.util.List;
-
+import java.util.HashSet;
 import org.junit.jupiter.api.Test;
-
-import br.gov.sp.fatec.springbootapp.entity.Usuario;
-//import org.springframework.test.annotation.Rollback;
-import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
-import br.gov.sp.fatec.springbootapp.entity.Classe;
-import br.gov.sp.fatec.springbootapp.entity.Personagem;
-
+import org.springframework.test.annotation.Rollback;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.transaction.annotation.Transactional;
-import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
-import br.gov.sp.fatec.springbootapp.service.NovoPersonagemService;
+import org.springframework.transaction.annotation.Transactional;
+import static org.junit.jupiter.api.Assertions.*;
+
+import br.gov.sp.fatec.springbootapp.entity.Classe;
+import br.gov.sp.fatec.springbootapp.entity.Usuario;
+import br.gov.sp.fatec.springbootapp.entity.Personagem;
+import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
 import br.gov.sp.fatec.springbootapp.service.SegurancaService;
-import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
+import br.gov.sp.fatec.springbootapp.service.NovoPersonagemService;
 import br.gov.sp.fatec.springbootapp.repository.ClasseRepository;
+import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
 import br.gov.sp.fatec.springbootapp.repository.PersonagemRepository;
+import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
 
 @SpringBootTest
-//@Transactional
-//@Rollback
+@Transactional
+@Rollback
 class SpringBootAppApplicationTests {
 
     @Autowired
