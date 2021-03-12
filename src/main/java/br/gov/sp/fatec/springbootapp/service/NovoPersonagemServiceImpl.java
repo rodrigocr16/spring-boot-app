@@ -7,10 +7,13 @@ import br.gov.sp.fatec.springbootapp.entity.Personagem;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.gov.sp.fatec.springbootapp.repository.ClasseRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
 import br.gov.sp.fatec.springbootapp.repository.PersonagemRepository;
 
+@Service("novoPersonagemService")
 public class NovoPersonagemServiceImpl implements NovoPersonagemService {
 
     @Autowired
@@ -31,9 +34,10 @@ public class NovoPersonagemServiceImpl implements NovoPersonagemService {
         
         Usuario usu = usuarioRepo.findUsuarioByNomeUsuario(proprietario);
             if(usu == null) {
+                usu = new Usuario();
                 usu = segService.criarUsuario(proprietario, "senha_padrao", "convidado", "usuario");
             }
-        Classe cla = classeRepo.findByNome(classe);
+        Classe cla = classeRepo.findClasseByNome(classe);
             if(cla == null) {
                 cla = new Classe();
                 cla.setNome(classe);
