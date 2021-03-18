@@ -1,7 +1,9 @@
 package br.gov.sp.fatec.springbootapp.service;
 
-
+import java.util.List;
 import java.util.HashSet;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
@@ -38,4 +40,28 @@ public class SegurancaServiceImpl implements SegurancaService {
         return usuario;
     }
     
+    @Override
+    public List<Usuario> buscarTodosUsuarios() {
+        return usuRepo.findAll();
+    }
+
+    @Override
+    public Usuario buscarUsuarioPorId(Long id) {
+        Optional<Usuario> usuarioOp = usuRepo.findById(id);
+        if(usuarioOp.isPresent()) {
+            return usuarioOp.get();
+        } else {
+            throw new RuntimeException("Usuario não encontrado");
+        }
+    }
+
+    @Override
+    public Usuario buscarUsuarioPorNomeUsuario(String nomeUsuario) {
+        Usuario usuario = usuRepo.findUsuarioByNomeUsuario(nomeUsuario);
+        if(usuario != null) {
+            return usuario;
+        } else {
+            throw new RuntimeException("Usuario não encontrado");
+        }
+    }
 }
