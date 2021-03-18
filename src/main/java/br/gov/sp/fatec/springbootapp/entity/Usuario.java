@@ -3,6 +3,11 @@ package br.gov.sp.fatec.springbootapp.entity;
 import java.util.Set;
 import java.util.HashSet;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.gov.sp.fatec.springbootapp.controller.JsonConfig;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,15 +22,18 @@ import javax.persistence.AttributeOverride;
 @AttributeOverride(name = "id", column = @Column(name = "usu_id"))
 public class Usuario extends GeraId{
 
+    @JsonView({JsonConfig.Usuario.class, JsonConfig.Autorizacao.class})
     @Column(name = "usu_nome_usuario")
     private String nomeUsuario;
 
     @Column(name = "usu_senha")
     private String senha;
 
+    @JsonView(JsonConfig.Usuario.class)
     @Column(name = "usu_nome_exibicao")
     private String nomeExibicao;
 
+    @JsonView(JsonConfig.Usuario.class)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "uau_usuario_autorizacao",
         joinColumns = { @JoinColumn(name = "uau_usu_id") },

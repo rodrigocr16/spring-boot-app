@@ -1,6 +1,8 @@
 package br.gov.sp.fatec.springbootapp.service;
 
 import java.util.List;
+
+import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 
 public interface SegurancaService {
@@ -12,4 +14,6 @@ public interface SegurancaService {
     public Usuario buscarUsuarioPorId(Long id);
 
     public Usuario buscarUsuarioPorNomeUsuario(String nomeUsuario);
+
+    public Autorizacao buscarAutorizacaoPorTipo(String tipo);
 }
