@@ -5,12 +5,14 @@ import java.util.HashSet;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import br.gov.sp.fatec.springbootapp.entity.Usuario;
-import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import br.gov.sp.fatec.springbootapp.entity.Usuario;
+import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
 import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
+import br.gov.sp.fatec.springbootapp.exception.RegistroNaoEncontradoException;
 
 @Service("segurancaService")
 public class SegurancaServiceImpl implements SegurancaService {
@@ -51,7 +53,7 @@ public class SegurancaServiceImpl implements SegurancaService {
         if(usuarioOp.isPresent()) {
             return usuarioOp.get();
         } else {
-            throw new RuntimeException("Usuario não encontrado");
+            throw new RegistroNaoEncontradoException("Usuario não encontrado");
         }
     }
 
@@ -61,7 +63,7 @@ public class SegurancaServiceImpl implements SegurancaService {
         if(usuario != null) {
             return usuario;
         } else {
-            throw new RuntimeException("Usuario não encontrado");
+            throw new RegistroNaoEncontradoException("Usuario não encontrado");
         }
     }
 
@@ -71,7 +73,7 @@ public class SegurancaServiceImpl implements SegurancaService {
         if(autorizacao != null){
             return autorizacao;
         } else {
-            throw new RuntimeException("Autorizacao não encontrada");
+            throw new RegistroNaoEncontradoException("Autorizacao não encontrada");
         }
     }
 }
