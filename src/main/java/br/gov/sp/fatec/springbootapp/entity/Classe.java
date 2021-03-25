@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.AttributeOverride;
 
 @Entity
-@Table(name = "cla_classe")
+@Table(name = "cla_classe") 
 @AttributeOverride(name = "id", column = @Column(name = "cla_id"))
 public class Classe extends GeraId{
     
