@@ -142,5 +142,13 @@ class SpringBootAppApplicationTests {
         Personagem personagem = perService.novoPersonagem("usuario_teste_2", "paladino", "artimus");
         assertNotNull(personagem);
     }
-   
+
+    
+    @Test
+    void atualizaUsuario() {
+        segService.atualizarNomeExibicao(1l, "rodrigo atualizado");
+        
+        Usuario usuario = segService.buscarUsuarioPorId(1l);
+        assertEquals(usuario.getNomeExibicao(), "rodrigo atualizado");
+    }
 }

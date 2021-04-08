@@ -16,4 +16,6 @@ public interface SegurancaService {
     public Usuario buscarUsuarioPorNomeUsuario(String nomeUsuario);
 
     public Autorizacao buscarAutorizacaoPorTipo(String tipo);
+
+    public Usuario atualizarNomeExibicao(Long id, String nomeExibicao);
 }

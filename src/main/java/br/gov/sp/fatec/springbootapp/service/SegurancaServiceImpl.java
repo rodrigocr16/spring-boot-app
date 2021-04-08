@@ -76,4 +76,16 @@ public class SegurancaServiceImpl implements SegurancaService {
             throw new RegistroNaoEncontradoException("Autorizacao não encontrada");
         }
     }
+
+    @Override
+    public Usuario atualizarNomeExibicao(Long id, String nomeExibicao) {
+        Usuario usuario = buscarUsuarioPorId(id);
+        if(usuario != null){
+            usuario.setNomeExibicao(nomeExibicao);
+            usuRepo.save(usuario);
+            return usuario;
+        } else {
+            throw new RegistroNaoEncontradoException("Usuário não encontrado");
+        }
+    }
 }

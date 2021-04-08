@@ -30,6 +30,12 @@ public class UsuarioController {
     @Autowired
     private SegurancaService segService;
 
+    @JsonView(JsonConfig.Autorizacao.class)
+    @GetMapping(value = "/auth/{autorizacao}")
+    public Autorizacao buscarAutorizacaoPorTipo(@PathVariable("autorizacao") String tipo) {
+        return segService.buscarAutorizacaoPorTipo(tipo);
+    }
+
     @JsonView(JsonConfig.Usuario.class)
     @GetMapping
     public List<Usuario> buscarTodos() {
@@ -48,6 +54,11 @@ public class UsuarioController {
         return segService.buscarUsuarioPorNomeUsuario(nomeUsuario);
     }
 
+    /*@PutMapping(value = "/{id}")
+    public Usuario atualizaUsuario(@PathVariable("id") Long id) {
+
+    }*/
+
     @PostMapping
     public ResponseEntity<Usuario> CadastrarUsuario(@RequestBody Usuario usuario,
         UriComponentsBuilder uriComponentsBuilder) {
@@ -59,11 +70,5 @@ public class UsuarioController {
             "/usuario/" + usuario.getId()
         ).build().toUri());
         return new ResponseEntity<Usuario>(usuario, responseHeaders, HttpStatus.CREATED);
-    }
-
-    @JsonView(JsonConfig.Autorizacao.class)
-    @GetMapping(value = "/auth/{autorizacao}")
-    public Autorizacao buscarAutorizacaoPorTipo(@PathVariable("autorizacao") String tipo) {
-        return segService.buscarAutorizacaoPorTipo(tipo);
-    }
+    }    
 }
