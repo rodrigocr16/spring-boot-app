@@ -143,7 +143,8 @@ class SpringBootAppApplicationTests {
         assertNotNull(personagem);
     }
 
-    
+    // TESTES DE CONTROLLER
+
     @Test
     void atualizaUsuario() {
         segService.atualizarNomeExibicao(1l, "rodrigo atualizado");

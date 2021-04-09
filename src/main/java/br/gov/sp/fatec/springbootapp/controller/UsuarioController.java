@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,10 +55,11 @@ public class UsuarioController {
         return segService.buscarUsuarioPorNomeUsuario(nomeUsuario);
     }
 
-    /*@PutMapping(value = "/{id}")
-    public Usuario atualizaUsuario(@PathVariable("id") Long id) {
-
-    }*/
+    @PutMapping(value = "/nomeUsuario/{id}")
+    public Usuario atualizaUsuario(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
+        segService.atualizarNomeExibicao(id, usuario.getNomeUsuario());
+        return usuario; 
+    }
 
     @PostMapping
     public ResponseEntity<Usuario> CadastrarUsuario(@RequestBody Usuario usuario,
