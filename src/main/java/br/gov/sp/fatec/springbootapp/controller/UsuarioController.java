@@ -11,11 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -23,8 +24,8 @@ import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
 import br.gov.sp.fatec.springbootapp.service.SegurancaService;
 
-@CrossOrigin
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
     
@@ -55,14 +56,21 @@ public class UsuarioController {
         return segService.buscarUsuarioPorNomeUsuario(nomeUsuario);
     }
 
-    @PutMapping(value = "/nomeUsuario/{id}")
-    public Usuario atualizaUsuario(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
-        segService.atualizarNomeExibicao(id, usuario.getNomeUsuario());
+    @JsonView(JsonConfig.Usuario.class)
+    @PutMapping(value = "/{id}")
+    public Usuario atualizarNomeExibicao(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
+        segService.atualizarNomeExibicao(id, usuario.getNomeExibicao());
         return usuario; 
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> deletarUsuario(@PathVariable("id") Long id) {
+        segService.deletarUsuario(id);
+        return ResponseEntity.ok("Usuário removido");
+    }
+
     @PostMapping
-    public ResponseEntity<Usuario> CadastrarUsuario(@RequestBody Usuario usuario,
+    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario,
         UriComponentsBuilder uriComponentsBuilder) {
 
         usuario = segService.criarUsuario(usuario.getNomeUsuario(), usuario.getSenha(), usuario.getNomeExibicao(), "usuario");

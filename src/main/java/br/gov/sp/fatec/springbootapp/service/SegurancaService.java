@@ -18,4 +18,6 @@ public interface SegurancaService {
     public Autorizacao buscarAutorizacaoPorTipo(String tipo);
 
     public Usuario atualizarNomeExibicao(Long id, String nomeExibicao);
+
+    public void deletarUsuario(Long id);
 }

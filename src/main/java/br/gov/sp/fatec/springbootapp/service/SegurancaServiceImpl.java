@@ -88,4 +88,14 @@ public class SegurancaServiceImpl implements SegurancaService {
             throw new RegistroNaoEncontradoException("Usuário não encontrado");
         }
     }
+
+    @Override
+    public void deletarUsuario(Long id) {
+        Usuario usuario = buscarUsuarioPorId(id);
+        if(usuario != null){
+            usuRepo.delete(usuario);
+        } else {
+            throw new RegistroNaoEncontradoException("Usuário não encontrado");
+        }
+    }
 }
