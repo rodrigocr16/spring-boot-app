@@ -22,7 +22,7 @@ import javax.persistence.AttributeOverride;
 @AttributeOverride(name = "id", column = @Column(name = "usu_id"))
 public class Usuario extends GeraId{
 
-    @JsonView({JsonConfig.Usuario.class, JsonConfig.Autorizacao.class})
+    @JsonView({JsonConfig.Usuario.class, JsonConfig.Autorizacao.class, JsonConfig.Personagem.class})
     @Column(name = "usu_nome_usuario")
     private String nomeUsuario;
 

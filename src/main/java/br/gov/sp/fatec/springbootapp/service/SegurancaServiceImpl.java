@@ -8,9 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.gov.sp.fatec.springbootapp.entity.Classe;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
+import br.gov.sp.fatec.springbootapp.entity.Personagem;
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
+import br.gov.sp.fatec.springbootapp.repository.ClasseRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+import br.gov.sp.fatec.springbootapp.repository.PersonagemRepository;
 import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.springbootapp.exception.RegistroNaoEncontradoException;
 
@@ -18,7 +22,13 @@ import br.gov.sp.fatec.springbootapp.exception.RegistroNaoEncontradoException;
 public class SegurancaServiceImpl implements SegurancaService {
 
     @Autowired
+    private ClasseRepository claRepo;    
+    
+    @Autowired
     private UsuarioRepository usuRepo;
+
+    @Autowired
+    private PersonagemRepository perRepo;
 
     @Autowired
     private AutorizacaoRepository autRepo;
@@ -98,4 +108,68 @@ public class SegurancaServiceImpl implements SegurancaService {
             throw new RegistroNaoEncontradoException("Usuário não encontrado");
         }
     }
+
+    /// SEGMENTO NOVO - PERSONAGENS
+
+    @Override
+    public List<Personagem> buscarTodosPersonagens() {
+        return perRepo.findAll();
+    }
+
+    @Override
+    public Personagem buscarPersonagemPorId(Long id) {
+        Optional<Personagem> personagemOp = perRepo.findById(id);
+        if(personagemOp.isPresent()) {
+            return personagemOp.get();
+        } else {
+            throw new RegistroNaoEncontradoException("Personagem não encontrado");
+        }
+    }
+
+    @Override
+    public Personagem atualizarNomePersonagem(Long id, String nome) {
+        Personagem personagem = buscarPersonagemPorId(id);
+        if(personagem != null){
+            personagem.setNome(nome);
+            perRepo.save(personagem);
+            return personagem;
+        } else {
+            throw new RegistroNaoEncontradoException("Personagem não encontrado");
+        }
+    }
+
+    @Override
+    public void deletarPersonagem(Long id) {
+        Personagem personagem = buscarPersonagemPorId(id);
+        if(personagem != null){
+            perRepo.delete(personagem);
+        } else {
+            throw new RegistroNaoEncontradoException("P6ersonagem não encontrado");
+        }
+    }
+
+    @Override
+    @Transactional
+    public Personagem cadastrarPersonagem(String proprietario, String classe, String nome) {
+        
+        Usuario usu = usuRepo.findUsuarioByNomeUsuario(proprietario);
+            if(usu == null) {
+                usu = new Usuario();
+                usu = criarUsuario(proprietario, "senha_padrao", "convidado", "usuario");
+            }
+        Classe cla = claRepo.findClasseByNome(classe);
+            if(cla == null) {
+                cla = new Classe();
+                cla.setNome(classe);
+                claRepo.save(cla);
+            }
+        Personagem personagem = new Personagem();
+            personagem.setProprietario(usu);
+            personagem.setClasse(cla);
+            personagem.setNome(nome);
+            perRepo.save(personagem);
+            
+        return personagem;
+    }
+
 }

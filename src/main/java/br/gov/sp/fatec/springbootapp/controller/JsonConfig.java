@@ -6,4 +6,6 @@ public class JsonConfig {
 
     public static class Autorizacao {}
 
+    public static class Personagem {}
+
 }
