@@ -1,5 +1,3 @@
-/* DIS A TEST */
-
 create schema labv;
 use labv;
 
