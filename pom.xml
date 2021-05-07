@@ -31,7 +31,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        
+
         <!-- permite trabalhar com xml -->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -47,7 +47,14 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
+        </dependency>
+        
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+                
 	</dependencies>
 
 	<build>
