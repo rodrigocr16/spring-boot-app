@@ -10,7 +10,7 @@ grant select, insert, delete, update on labv.* to user@'localhost';
 create table usu_usuario (
     usu_id bigint unsigned auto_increment,
     usu_nome_usuario varchar(50) not null,
-    usu_senha varchar(50) not null,
+    usu_senha varchar(100) not null,
     usu_nome_exibicao varchar(64),
     
     constraint pk_usu primary key(usu_id),
@@ -54,9 +54,9 @@ create table per_personagem (
 );
 
 insert into usu_usuario(usu_nome_usuario, usu_senha, usu_nome_exibicao)
-    values('rodrigocr16', 'pepino', 'rodrigo reis');
+    values('rodrigocr16', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'rodrigo reis');
 
-insert into aut_autorizacao(aut_tipo) values('admin');
+insert into aut_autorizacao(aut_tipo) values('ROLE_ADMIN');
 
 insert into uau_usuario_autorizacao values(1,1);
 

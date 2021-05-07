@@ -54,7 +54,7 @@ class SpringBootAppApplicationTests {
         usuario.setSenha("senha");
         usuario.setAutorizacoes(new HashSet<Autorizacao>());
             Autorizacao aut = new Autorizacao();
-            aut.setTipo("usuario");
+            aut.setTipo("ROLE_USER");
             autRepo.save(aut);
             usuario.getAutorizacoes().add(aut);
         usuario.setNomeExibicao("teste");
@@ -72,7 +72,7 @@ class SpringBootAppApplicationTests {
     @Test
     void testaAutorizacao() {
         Usuario usuario = usuarioRepo.findById(1L).get();
-        assertEquals("admin", usuario.getAutorizacoes().iterator().next().getTipo());
+        assertEquals("ROLE_ADMIN", usuario.getAutorizacoes().iterator().next().getTipo());
     }
 
     // TESTES DE BUSCA
@@ -88,7 +88,7 @@ class SpringBootAppApplicationTests {
     }
     @Test
     void testaBuscaUsuarioAutorizacao() {
-        List<Usuario> usuarios = usuarioRepo.findUsuarioByAutorizacoesTipo("admin");
+        List<Usuario> usuarios = usuarioRepo.findUsuarioByAutorizacoesTipo("ROLE_ADMIN");
         assertTrue(!usuarios.isEmpty());
     }
 
@@ -105,7 +105,7 @@ class SpringBootAppApplicationTests {
     }
     @Test
     void testaQueryBuscaUsuarioAutorizacao() {
-        List<Usuario> usuarios = usuarioRepo.buscaPorNomeAutorizacao("admin");
+        List<Usuario> usuarios = usuarioRepo.buscaPorNomeAutorizacao("ROLE_ADMIN");
         assertTrue(!usuarios.isEmpty());
     }
 
@@ -133,7 +133,7 @@ class SpringBootAppApplicationTests {
     // TESTE DE SERVICES
     @Test
     void testaServicoCriaUsuario() {
-        Usuario usuario = segService.criarUsuario("joedoe", "j03m4m4", "joseph doestar", "usuario");
+        Usuario usuario = segService.criarUsuario("joedoe", "j03m4m4", "joseph doestar", "ROLE_USER");
         assertNotNull(usuario);
     }
 

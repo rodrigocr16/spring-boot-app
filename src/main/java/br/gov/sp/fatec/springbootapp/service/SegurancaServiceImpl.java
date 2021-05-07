@@ -3,10 +3,15 @@ package br.gov.sp.fatec.springbootapp.service;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.springbootapp.entity.Classe;
@@ -29,6 +34,9 @@ public class SegurancaServiceImpl implements SegurancaService {
     private UsuarioRepository usuRepo;
 
     @Autowired
+    private PasswordEncoder passEncoder;
+
+    @Autowired
     private PersonagemRepository perRepo;
 
     @Autowired
@@ -45,7 +53,7 @@ public class SegurancaServiceImpl implements SegurancaService {
             }
         Usuario usuario = new Usuario();
             usuario.setNomeUsuario(nomeUsuario);
-            usuario.setSenha(senha);
+            usuario.setSenha(passEncoder.encode(senha));
             usuario.setNomeExibicao(nomeExibicao);
             usuario.setAutorizacoes(new HashSet<Autorizacao>());
             usuario.getAutorizacoes().add(aut);
@@ -54,12 +62,13 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
     
     @Override
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Usuario> buscarTodosUsuarios() {
         return usuRepo.findAll();
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Usuario buscarUsuarioPorId(Long id) {
         Optional<Usuario> usuarioOp = usuRepo.findById(id);
         if(usuarioOp.isPresent()) {
@@ -70,6 +79,7 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
 
     @Override
+    @PreAuthorize("isAuthenticated()")
     public Usuario buscarUsuarioPorNomeUsuario(String nomeUsuario) {
         Usuario usuario = usuRepo.findUsuarioByNomeUsuario(nomeUsuario);
         if(usuario != null) {
@@ -80,6 +90,7 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
 
     @Override
+    @PreAuthorize("isAuthenticated()")
     public Autorizacao buscarAutorizacaoPorTipo(String tipo) {
         Autorizacao autorizacao = autRepo.findByTipo(tipo);
         if(autorizacao != null){
@@ -157,7 +168,7 @@ public class SegurancaServiceImpl implements SegurancaService {
         Usuario usu = usuRepo.findUsuarioByNomeUsuario(proprietario);
             if(usu == null) {
                 usu = new Usuario();
-                usu = criarUsuario(proprietario, "senha_padrao", "convidado", "usuario");
+                usu = criarUsuario(proprietario, passEncoder.encode("senhaPadrao"), "convidado", "ROLE_USER");
             }
         Classe cla = claRepo.findClasseByNome(classe);
             if(cla == null) {
@@ -174,4 +185,16 @@ public class SegurancaServiceImpl implements SegurancaService {
         return personagem;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario = usuRepo.findUsuarioByNomeUsuario(username);
+        if(usuario == null){
+            throw new UsernameNotFoundException("Usuario nao encontrado!");
+        }
+        return User.builder().username(username).password(usuario.getSenha())
+            .authorities(usuario.getAutorizacoes().stream()
+                .map(Autorizacao::getTipo).collect(Collectors.toList())
+                .toArray(new String[usuario.getAutorizacoes().size()]))
+            .build();
+    }
 }
