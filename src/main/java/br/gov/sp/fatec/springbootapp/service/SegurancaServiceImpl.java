@@ -68,7 +68,7 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("isAuthenticated()")
     public Usuario buscarUsuarioPorId(Long id) {
         Optional<Usuario> usuarioOp = usuRepo.findById(id);
         if(usuarioOp.isPresent()) {
@@ -90,7 +90,7 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
 
     @Override
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ADMIN')")
     public Autorizacao buscarAutorizacaoPorTipo(String tipo) {
         Autorizacao autorizacao = autRepo.findByTipo(tipo);
         if(autorizacao != null){
@@ -101,6 +101,7 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
 
     @Override
+    @PreAuthorize("isAuthenticated()")
     public Usuario atualizarNomeExibicao(Long id, String nomeExibicao) {
         Usuario usuario = buscarUsuarioPorId(id);
         if(usuario != null){
@@ -113,6 +114,7 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public void deletarUsuario(Long id) {
         Usuario usuario = buscarUsuarioPorId(id);
         if(usuario != null){
@@ -125,11 +127,13 @@ public class SegurancaServiceImpl implements SegurancaService {
     /// SEGMENTO NOVO - PERSONAGENS
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Personagem> buscarTodosPersonagens() {
         return perRepo.findAll();
     }
 
     @Override
+    @PreAuthorize("isAuthenticated()")
     public Personagem buscarPersonagemPorId(Long id) {
         Optional<Personagem> personagemOp = perRepo.findById(id);
         if(personagemOp.isPresent()) {
@@ -140,6 +144,7 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Personagem atualizarNomePersonagem(Long id, String nome) {
         Personagem personagem = buscarPersonagemPorId(id);
         if(personagem != null){
@@ -152,6 +157,7 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public void deletarPersonagem(Long id) {
         Personagem personagem = buscarPersonagemPorId(id);
         if(personagem != null){

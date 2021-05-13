@@ -35,7 +35,7 @@ public class NovoPersonagemServiceImpl implements NovoPersonagemService {
         Usuario usu = usuarioRepo.findUsuarioByNomeUsuario(proprietario);
             if(usu == null) {
                 usu = new Usuario();
-                usu = segService.criarUsuario(proprietario, "senha_padrao", "convidado", "usuario");
+                usu = segService.criarUsuario(proprietario, "senha_padrao", "convidado", "ROLE_USER");
             }
         Classe cla = classeRepo.findClasseByNome(classe);
             if(cla == null) {

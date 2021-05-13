@@ -54,7 +54,7 @@ create table per_personagem (
 );
 
 insert into usu_usuario(usu_nome_usuario, usu_senha, usu_nome_exibicao)
-    values('rodrigocr16', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'rodrigo reis');
+    values('admin', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'dono da bola');
 
 insert into aut_autorizacao(aut_tipo) values('ROLE_ADMIN');
 
