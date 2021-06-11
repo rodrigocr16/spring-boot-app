@@ -79,7 +79,7 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
 
     @Override
-    @PreAuthorize("isAuthenticated()")
+    //@PreAuthorize("isAuthenticated()")
     public Usuario buscarUsuarioPorNomeUsuario(String nomeUsuario) {
         Usuario usuario = usuRepo.findUsuarioByNomeUsuario(nomeUsuario);
         if(usuario != null) {
