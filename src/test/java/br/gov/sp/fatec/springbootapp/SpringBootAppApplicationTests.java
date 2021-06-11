@@ -147,9 +147,9 @@ class SpringBootAppApplicationTests {
 
     @Test
     void atualizaUsuario() {
-        segService.atualizarNomeExibicao(1l, "rodrigo atualizado");
+        segService.atualizarNomeExibicao("admin", "rodrigo atualizado");
         
-        Usuario usuario = segService.buscarUsuarioPorId(1l);
+        Usuario usuario = segService.buscarUsuarioPorNomeUsuario("admin");
         assertEquals(usuario.getNomeExibicao(), "rodrigo atualizado");
     }
 }

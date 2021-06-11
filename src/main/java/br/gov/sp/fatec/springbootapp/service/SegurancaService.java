@@ -20,9 +20,9 @@ public interface SegurancaService extends UserDetailsService {
 
     public Autorizacao buscarAutorizacaoPorTipo(String tipo);
 
-    public Usuario atualizarNomeExibicao(Long id, String nomeExibicao);
+    public Usuario atualizarNomeExibicao(String nomeUsuario, String nomeExibicao);
 
-    public void deletarUsuario(Long id);
+    public void deletarUsuario(String nomeUsuario);
 
 
     public List<Personagem> buscarTodosPersonagens();

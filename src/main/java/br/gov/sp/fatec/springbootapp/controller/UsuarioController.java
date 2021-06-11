@@ -57,15 +57,15 @@ public class UsuarioController {
     }
 
     @JsonView(JsonConfig.Usuario.class)
-    @PutMapping(value = "/{id}")
-    public Usuario atualizarNomeExibicao(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
-        segService.atualizarNomeExibicao(id, usuario.getNomeExibicao());
+    @PutMapping(value = "/{nomeUsuario}")
+    public Usuario atualizarNomeExibicao(@PathVariable("nomeUsuario") String nomeUsuario, @RequestBody Usuario usuario) {
+        segService.atualizarNomeExibicao(nomeUsuario, usuario.getNomeExibicao());
         return usuario; 
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deletarUsuario(@PathVariable("id") Long id) {
-        segService.deletarUsuario(id);
+    @DeleteMapping(value = "/{nomeUsuario}")
+    public ResponseEntity<String> deletarUsuario(@PathVariable("nomeUsuario") String nomeUsuario) {
+        segService.deletarUsuario(nomeUsuario);
         return ResponseEntity.ok("Usuário removido");
     }
 

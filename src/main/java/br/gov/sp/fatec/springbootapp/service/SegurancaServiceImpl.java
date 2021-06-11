@@ -102,8 +102,8 @@ public class SegurancaServiceImpl implements SegurancaService {
 
     @Override
     @PreAuthorize("isAuthenticated()")
-    public Usuario atualizarNomeExibicao(Long id, String nomeExibicao) {
-        Usuario usuario = buscarUsuarioPorId(id);
+    public Usuario atualizarNomeExibicao(String nomeUsuario, String nomeExibicao) {
+        Usuario usuario = buscarUsuarioPorNomeUsuario(nomeUsuario);
         if(usuario != null){
             usuario.setNomeExibicao(nomeExibicao);
             usuRepo.save(usuario);
@@ -115,8 +115,8 @@ public class SegurancaServiceImpl implements SegurancaService {
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public void deletarUsuario(Long id) {
-        Usuario usuario = buscarUsuarioPorId(id);
+    public void deletarUsuario(String nomeUsuario) {
+        Usuario usuario = buscarUsuarioPorNomeUsuario(nomeUsuario);
         if(usuario != null){
             usuRepo.delete(usuario);
         } else {
